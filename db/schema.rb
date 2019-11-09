@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_08_062561) do
+ActiveRecord::Schema.define(version: 2019_11_08_233118) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,18 @@ ActiveRecord::Schema.define(version: 2019_11_08_062561) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "defenses_stats", force: :cascade do |t|
+    t.integer "sacks", default: 0
+    t.integer "ints", default: 0
+    t.integer "fumble_recoveries", default: 0
+    t.integer "touchdowns", default: 0
+    t.integer "safeties", default: 0
+    t.integer "blocked_kicks", default: 0
+    t.integer "return_tds", default: 0
+    t.integer "points_allowed", default: 0
+    t.integer "player_id", default: 0
+  end
+
   create_table "friendly_id_slugs", force: :cascade do |t|
     t.string "slug", null: false
     t.integer "sluggable_id", null: false
@@ -35,6 +47,35 @@ ActiveRecord::Schema.define(version: 2019_11_08_062561) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
+  create_table "kickers_stats", force: :cascade do |t|
+    t.integer "0_to_19", default: 0
+    t.integer "20_to_29", default: 0
+    t.integer "30_to_39", default: 0
+    t.integer "40_to_49", default: 0
+    t.integer "50_plus", default: 0
+    t.integer "pat", default: 0
+    t.integer "player_id", default: 0
+  end
+
+  create_table "leagues", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "max_players", default: 12, null: false
+    t.string "code"
+    t.integer "commissioner", null: false
+    t.integer "number_of_qbs", default: 1, null: false
+    t.integer "number_of_wrs", default: 1, null: false
+    t.integer "number_of_rbs", default: 1, null: false
+    t.integer "number_of_tes", default: 1, null: false
+    t.integer "number_of_kickers", default: 1, null: false
+    t.integer "number_of_defenses", default: 1, null: false
+  end
+
+  create_table "leagues_users", force: :cascade do |t|
+    t.integer "league_id", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id", "league_id"], name: "index_leagues_users_on_user_id_and_league_id", unique: true
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "recipient_id"
     t.bigint "actor_id"
@@ -44,6 +85,46 @@ ActiveRecord::Schema.define(version: 2019_11_08_062561) do
     t.string "notifiable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "players", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "team", null: false
+    t.integer "position", null: false
+  end
+
+  create_table "position_players_stats", force: :cascade do |t|
+    t.integer "player_id", null: false
+    t.integer "pass_yards", default: 0
+    t.integer "pass_tds", default: 0
+    t.integer "interceptions", default: 0
+    t.integer "rush_yards", default: 0
+    t.integer "rush_tds", default: 0
+    t.integer "receptions", default: 0
+    t.integer "rec_yards", default: 0
+    t.integer "rec_tds", default: 0
+    t.integer "return_tds", default: 0
+    t.integer "two_point", default: 0
+    t.integer "fumbles_lost", default: 0
+    t.index ["player_id"], name: "index_position_players_stats_on_player_id", unique: true
+  end
+
+  create_table "rostered_players", force: :cascade do |t|
+    t.integer "player_id", null: false
+    t.integer "roster_id", null: false
+    t.index ["player_id"], name: "index_rostered_players_on_player_id", unique: true
+    t.index ["roster_id"], name: "index_rostered_players_on_roster_id", unique: true
+  end
+
+  create_table "rosters", force: :cascade do |t|
+    t.integer "week_number", null: false
+    t.integer "user_id", null: false
+    t.integer "league_id", null: false
+    t.integer "score", default: 0, null: false
+    t.index ["league_id"], name: "index_rosters_on_league_id", unique: true
+    t.index ["user_id", "league_id", "week_number"], name: "index_rosters_on_user_id_and_league_id_and_week_number", unique: true
+    t.index ["user_id"], name: "index_rosters_on_user_id", unique: true
+    t.index ["week_number"], name: "index_rosters_on_week_number", unique: true
   end
 
   create_table "services", force: :cascade do |t|

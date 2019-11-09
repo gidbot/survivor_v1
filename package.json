@@ -1,5 +1,5 @@
 {
-  "name": "myapp",
+  "name": "survivor_v1",
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.1-rc1",

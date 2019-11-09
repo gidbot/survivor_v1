@@ -3,8 +3,8 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
     create_table :leagues, force: :cascade  do |t|
       t.string "name", null: false
       t.integer "max_players", null: false, default: 12
-      t.string "code", nulle: false
-      t.integer "commissioner", null: false
+      t.string "group_password"
+      t.integer "commissioner_id", null: false
       t.integer "number_of_qbs", null: false, default: 1
       t.integer "number_of_wrs", null: false, default: 1
       t.integer "number_of_rbs", null: false, default: 1
@@ -14,8 +14,8 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
     end
 
     create_table :leagues_users, force: :cascade do |t|
-      t.integer "league_id",  null: false
-      t.integer "user_id",    null: false
+      t.integer "league_id",  null: false, index: true
+      t.integer "user_id",    null: false, index: true
       t.index ["user_id", "league_id"], unique: true
     end
 

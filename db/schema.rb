@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   create_table "leagues", force: :cascade do |t|
     t.string "name", null: false
     t.integer "max_players", default: 12, null: false
-    t.string "code"
-    t.integer "commissioner", null: false
+    t.string "group_password"
+    t.integer "commissioner_id", null: false
     t.integer "number_of_qbs", default: 1, null: false
     t.integer "number_of_wrs", default: 1, null: false
     t.integer "number_of_rbs", default: 1, null: false
@@ -73,7 +73,9 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   create_table "leagues_users", force: :cascade do |t|
     t.integer "league_id", null: false
     t.integer "user_id", null: false
+    t.index ["league_id"], name: "index_leagues_users_on_league_id"
     t.index ["user_id", "league_id"], name: "index_leagues_users_on_user_id_and_league_id", unique: true
+    t.index ["user_id"], name: "index_leagues_users_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|

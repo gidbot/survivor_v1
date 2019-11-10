@@ -2,4 +2,16 @@
 
 <br>
 
-<%= link_to "Create League", new_league_path %>
+<%= link_to "Create A League", new_league_path %>
+
+<br>
+<br>
+
+
+<h4> My Leagues: </h4>
+
+<% current_user.leagues.each do |league| %>
+
+  League: <%= link_to league.name, league_path(league) %>
+
+<% end %>

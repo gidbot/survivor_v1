@@ -15,4 +15,13 @@ class Roster < ApplicationRecord
     end
   end
 
+  def players
+    @players ||= begin
+       positions.keys.map do |roster_position|
+         player = Player.find(positions[roster_position])
+         { roster_position: roster_position, player: player }
+       end
+    end
+  end
+
 end

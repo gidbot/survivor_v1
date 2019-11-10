@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
   before_action :team
 
   def show
-    @roster = team.roster.where(week: current_week).first
+    @roster = team.rosters.where(week: current_week).first
   end
 
   private

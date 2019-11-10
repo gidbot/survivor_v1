@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   end
 
   create_table "defenses_stats", force: :cascade do |t|
+    t.integer "player_id", null: false
+    t.integer "week_id", null: false
     t.integer "sacks", default: 0
     t.integer "ints", default: 0
     t.integer "fumble_recoveries", default: 0
@@ -33,7 +35,9 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.integer "blocked_kicks", default: 0
     t.integer "return_tds", default: 0
     t.integer "points_allowed", default: 0
-    t.integer "player_id", default: 0
+    t.index ["player_id", "week_id"], name: "index_defenses_stats_on_player_id_and_week_id", unique: true
+    t.index ["player_id"], name: "index_defenses_stats_on_player_id"
+    t.index ["week_id"], name: "index_defenses_stats_on_week_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -48,13 +52,17 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   end
 
   create_table "kickers_stats", force: :cascade do |t|
+    t.integer "player_id", null: false
+    t.integer "week_id", null: false
     t.integer "0_to_19", default: 0
     t.integer "20_to_29", default: 0
     t.integer "30_to_39", default: 0
     t.integer "40_to_49", default: 0
     t.integer "50_plus", default: 0
     t.integer "pat", default: 0
-    t.integer "player_id", default: 0
+    t.index ["player_id", "week_id"], name: "index_kickers_stats_on_player_id_and_week_id", unique: true
+    t.index ["player_id"], name: "index_kickers_stats_on_player_id"
+    t.index ["week_id"], name: "index_kickers_stats_on_week_id"
   end
 
   create_table "leagues", force: :cascade do |t|
@@ -84,6 +92,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
 
   create_table "position_players_stats", force: :cascade do |t|
     t.integer "player_id", null: false
+    t.integer "week_id", null: false
     t.integer "pass_yards", default: 0
     t.integer "pass_tds", default: 0
     t.integer "interceptions", default: 0
@@ -95,14 +104,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.integer "return_tds", default: 0
     t.integer "two_point", default: 0
     t.integer "fumbles_lost", default: 0
-    t.index ["player_id"], name: "index_position_players_stats_on_player_id", unique: true
-  end
-
-  create_table "rostered_players", force: :cascade do |t|
-    t.integer "player_id", null: false
-    t.integer "roster_id", null: false
-    t.index ["player_id"], name: "index_rostered_players_on_player_id", unique: true
-    t.index ["roster_id"], name: "index_rostered_players_on_roster_id", unique: true
+    t.index ["player_id", "week_id"], name: "index_position_players_stats_on_player_id_and_week_id", unique: true
   end
 
   create_table "rosters", force: :cascade do |t|

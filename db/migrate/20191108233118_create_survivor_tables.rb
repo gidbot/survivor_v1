@@ -30,11 +30,6 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.index ["team_id", "week_id"], unique: true
     end
 
-    create_table :rostered_players, force: :cascade do |t|
-      t.integer "player_id", null: false, index: { unique: true }
-      t.integer "roster_id", null: false, index: { unique: true }
-    end
-
     create_table :weeks, force: :cascade do |t|
       t.integer "number", null: false
       t.boolean "current", null: false, default: false
@@ -42,7 +37,8 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
     end
 
     create_table :position_players_stats, force: :cascade do |t|
-      t.integer "player_id", null: false, index: { unique: true }
+      t.integer "player_id", null: false
+      t.integer "week_id", null: false
       t.integer "pass_yards", default: 0
       t.integer "pass_tds", default: 0
       t.integer "interceptions", default: 0
@@ -54,19 +50,24 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "return_tds", default: 0
       t.integer "two_point", default: 0
       t.integer "fumbles_lost", default: 0
+      t.index ["player_id", "week_id"], unique: true
     end
 
     create_table :kickers_stats, force: :cascade do |t|
+      t.integer "player_id", null: false, index: true
+      t.integer "week_id", null: false, index: true
       t.integer "0_to_19", default: 0
       t.integer "20_to_29", default: 0
       t.integer "30_to_39", default: 0
       t.integer "40_to_49", default: 0
       t.integer "50_plus", default: 0
       t.integer "pat", default: 0
-      t.integer "player_id", default: 0
+      t.index ["player_id", "week_id"], unique: true
     end
 
     create_table :defenses_stats, force: :cascade do |t|
+      t.integer "player_id", null: false, index: true
+      t.integer "week_id", null: false, index: true
       t.integer "sacks", default: 0
       t.integer "ints", default: 0
       t.integer "fumble_recoveries", default: 0
@@ -75,7 +76,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "blocked_kicks", default: 0
       t.integer "return_tds", default: 0
       t.integer "points_allowed", default: 0
-      t.integer "player_id", default: 0
+      t.index ["player_id", "week_id"], unique: true
     end
   end
 end

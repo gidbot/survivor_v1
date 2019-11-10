@@ -10,6 +10,6 @@ class User < ApplicationRecord
   # Default Implementation ^
 
   has_many :teams
-  has_and_belongs_to_many :leagues, through: :teams
+  has_many :leagues, through: :teams
 
 end

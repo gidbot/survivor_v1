@@ -4,6 +4,17 @@ class Roster < ApplicationRecord
   belongs_to :week
   before_create :build_positions
 
+  default_scope { includes(:week, :team) }
+
+  def players
+    @players ||= begin
+      positions.keys.map do |roster_position|
+        player = Player.find_by_id(positions[roster_position])
+        { roster_position: roster_position, player: player, score: calculate_score(player) }
+      end
+    end
+  end
+
   private
 
   def build_positions
@@ -15,13 +26,8 @@ class Roster < ApplicationRecord
     end
   end
 
-  def players
-    @players ||= begin
-       positions.keys.map do |roster_position|
-         player = Player.find(positions[roster_position])
-         { roster_position: roster_position, player: player }
-       end
-    end
+  def calculate_score(player)
+    0
   end
 
 end

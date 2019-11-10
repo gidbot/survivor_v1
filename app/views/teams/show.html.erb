@@ -1,7 +1,28 @@
 <div class="row">
   <div class="col-sm-8 ml-auto mr-auto">
     <h1 class="text-center"> <%= @team.user.name %> </h1>
-    <h2 class="text-center"> Week <%= @current_week.number %> Roster </h2>
   </div>
 </div>
 
+<h4> Rosters: </h4>
+
+<div class="row">
+  <div class="col-sm-8 ml-auto mr-auto">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Week</th>
+        <th scope="col">Score</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @team.rosters.each do |roster| %>
+        <tr>
+          <td> <%= link_to "Week #{roster.week.number}", roster_path(roster) %> </td>
+          <td> <%= roster.score %> </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,5 +1,12 @@
 <div class="row">
   <div class="col-sm-8 ml-auto mr-auto">
+    <h1 class="text-center"> <%= "#{@roster.team.user.name} - Week #{@roster.week.number}" %> </h1>
+    <div class="text-center"> <%= link_to "Edit", edit_roster_path(@roster) if @roster.team.user == current_user %> </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-8 ml-auto mr-auto">
     <table class="table">
       <thead>
       <tr>
@@ -11,9 +18,9 @@
       <tbody>
       <% @roster.players.each do |players| %>
         <tr>
-          <th scope="row"><%= index+1 %></th>
-          <td>  </td>
-          <td><%= link_to(team.name, team_path(team) ) %></td>
+          <td> <%= players[:roster_position] %> </td>
+          <td> <%= players[:player]&.name %> </td>
+          <td> <%= players[:score] %></td>
         </tr>
       <% end %>
       </tbody>

@@ -1,5 +1,7 @@
 class LeaguesController < ApplicationController
 
+  before_action :league, except: [:new, :create]
+
   def new
     @league = League.new
   end
@@ -7,7 +9,7 @@ class LeaguesController < ApplicationController
   def create
     @league = League.new(league_params)
     @league.commissioner = current_user
-    @league.users << current_user
+    @league.teams << Team.new(user: current_user, name: "#{current_user.name}'s Team")
     if @league.save
       redirect_to league_path(@league)
     else
@@ -16,11 +18,11 @@ class LeaguesController < ApplicationController
     end
   end
 
-  def show
-    @league = League.find(params[:id])
-  end
-
   private
+
+  def league
+    @league ||= League.find(params[:id])
+  end
 
   def league_params
     params.require('league').permit(

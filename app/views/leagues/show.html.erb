@@ -1,23 +1,25 @@
 <div class="row">
-  <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+  <div class="col-sm-8 ml-auto mr-auto">
     <h1 class="text-center"> <%= @league.name %> </h1>
   </div>
 </div>
 
 <div class="row">
-  <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+  <div class="col-sm-8 ml-auto mr-auto">
     <table class="table">
       <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Name</th>
+        <th scope="col">Manager</th>
+        <th scope="col">Team Name</th>
       </tr>
       </thead>
       <tbody>
-        <% @league.users.each_with_index do |user, index| %>
+        <% @league.teams.each_with_index do |team, index| %>
           <tr>
-            <th scope="row"><%= index %></th>
-            <td><%= user.name %></td>
+            <th scope="row"><%= index+1 %></th>
+            <td><%= link_to(team.user.name, user_path(team.user))%></td>
+            <td><%= link_to(team.name, team_path(team) ) %></td>
           </tr>
         <% end %>
       </tbody>

@@ -7,8 +7,9 @@ class User < ApplicationRecord
 
   has_many :notifications, foreign_key: :recipient_id
   has_many :services
-
   # Default Implementation ^
-  has_and_belongs_to_many :leagues
+
+  has_many :teams
+  has_and_belongs_to_many :leagues, through: :teams
 
 end

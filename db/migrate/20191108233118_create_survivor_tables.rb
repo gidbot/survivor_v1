@@ -5,17 +5,14 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "max_players", null: false, default: 12
       t.string "group_password"
       t.integer "commissioner_id", null: false
-      t.integer "number_of_qbs", null: false, default: 1
-      t.integer "number_of_wrs", null: false, default: 1
-      t.integer "number_of_rbs", null: false, default: 1
-      t.integer "number_of_tes", null: false, default: 1
-      t.integer "number_of_kickers", null: false, default: 1
-      t.integer "number_of_defenses", null: false, default: 1
+      t.json "positions"
     end
 
-    create_table :leagues_users, force: :cascade do |t|
+    create_table :teams, force: :cascade do |t|
       t.integer "league_id",  null: false, index: true
       t.integer "user_id",    null: false, index: true
+      t.string "name", null: false
+      t.integer "season_score", default: 0, null: false
       t.index ["user_id", "league_id"], unique: true
     end
 
@@ -26,16 +23,22 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
     end
 
     create_table :rosters, force: :cascade do |t|
-      t.integer "week_number",     null: false, index: { unique: true }
-      t.integer "user_id",         null: false, index: { unique: true }
-      t.integer "league_id",       null: false, index: { unique: true }
+      t.integer "week_id",         null: false, index: true
+      t.integer "team_id",         null: false, index: true
       t.integer "score",           null: false, default: 0
-      t.index ["user_id", "league_id", "week_number"], unique: true
+      t.json "positions", null: false
+      t.index ["team_id", "week_id"], unique: true
     end
 
     create_table :rostered_players, force: :cascade do |t|
       t.integer "player_id", null: false, index: { unique: true }
       t.integer "roster_id", null: false, index: { unique: true }
+    end
+
+    create_table :weeks, force: :cascade do |t|
+      t.integer "number", null: false
+      t.boolean "current", null: false, default: false
+      t.index ["number"], where: "current = TRUE"
     end
 
     create_table :position_players_stats, force: :cascade do |t|
@@ -51,7 +54,6 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "return_tds", default: 0
       t.integer "two_point", default: 0
       t.integer "fumbles_lost", default: 0
-
     end
 
     create_table :kickers_stats, force: :cascade do |t|

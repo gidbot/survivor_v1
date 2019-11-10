@@ -62,20 +62,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.integer "max_players", default: 12, null: false
     t.string "group_password"
     t.integer "commissioner_id", null: false
-    t.integer "number_of_qbs", default: 1, null: false
-    t.integer "number_of_wrs", default: 1, null: false
-    t.integer "number_of_rbs", default: 1, null: false
-    t.integer "number_of_tes", default: 1, null: false
-    t.integer "number_of_kickers", default: 1, null: false
-    t.integer "number_of_defenses", default: 1, null: false
-  end
-
-  create_table "leagues_users", force: :cascade do |t|
-    t.integer "league_id", null: false
-    t.integer "user_id", null: false
-    t.index ["league_id"], name: "index_leagues_users_on_league_id"
-    t.index ["user_id", "league_id"], name: "index_leagues_users_on_user_id_and_league_id", unique: true
-    t.index ["user_id"], name: "index_leagues_users_on_user_id"
+    t.json "positions"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -119,14 +106,13 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   end
 
   create_table "rosters", force: :cascade do |t|
-    t.integer "week_number", null: false
-    t.integer "user_id", null: false
-    t.integer "league_id", null: false
+    t.integer "week_id", null: false
+    t.integer "team_id", null: false
     t.integer "score", default: 0, null: false
-    t.index ["league_id"], name: "index_rosters_on_league_id", unique: true
-    t.index ["user_id", "league_id", "week_number"], name: "index_rosters_on_user_id_and_league_id_and_week_number", unique: true
-    t.index ["user_id"], name: "index_rosters_on_user_id", unique: true
-    t.index ["week_number"], name: "index_rosters_on_week_number", unique: true
+    t.json "positions", null: false
+    t.index ["team_id", "week_id"], name: "index_rosters_on_team_id_and_week_id", unique: true
+    t.index ["team_id"], name: "index_rosters_on_team_id"
+    t.index ["week_id"], name: "index_rosters_on_week_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -143,6 +129,16 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
+  create_table "teams", force: :cascade do |t|
+    t.integer "league_id", null: false
+    t.integer "user_id", null: false
+    t.string "name", null: false
+    t.integer "season_score", default: 0, null: false
+    t.index ["league_id"], name: "index_teams_on_league_id"
+    t.index ["user_id", "league_id"], name: "index_teams_on_user_id_and_league_id", unique: true
+    t.index ["user_id"], name: "index_teams_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -157,6 +153,12 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "weeks", force: :cascade do |t|
+    t.integer "number", null: false
+    t.boolean "current", default: false, null: false
+    t.index ["number"], name: "index_weeks_on_number", where: "(current = true)"
   end
 
   add_foreign_key "services", "users"

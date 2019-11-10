@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-sm-8 ml-auto mr-auto">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">Pos</th>
+        <th scope="col">Player</th>
+        <th scope="col">Points</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @league.teams.each_with_index do |team| %>
+        <tr>
+          <th scope="row"><%= index+1 %></th>
+          <td>  </td>
+          <td><%= link_to(team.name, team_path(team) ) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -22,5 +22,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
 
   resources :leagues, except: [:destroy]
-
+  resources :teams, execept: [:destroy, :index]
+  resources :rosters, execept: [:destroy]
+  resources :users, except: [:destroy]
 end

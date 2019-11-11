@@ -2,14 +2,14 @@ class Roster < ApplicationRecord
 
   belongs_to :team
   belongs_to :week
-  before_create :build_positions
+  before_create :build_roster_spots
 
   default_scope { includes(:week, :team) }
 
   def players
     @players ||= begin
-      positions.keys.map do |roster_position|
-        player = Player.find_by_id(positions[roster_position])
+      roster_spots.keys.map do |roster_position|
+        player = Player.find_by_id(roster_spots[roster_position])
         { roster_position: roster_position, player: player, score: calculate_score(player) }
       end
     end
@@ -17,12 +17,10 @@ class Roster < ApplicationRecord
 
   private
 
-  def build_positions
-    self.positions = {}
-    self.team.league.positions.each do |key, value|
-      for i in (1..value) do
-        self.positions["#{key}_#{i}"] = nil
-      end
+  def build_roster_spots
+    self.roster_spots = {}
+    self.team.league.roster_spots.each do |key, value|
+      self.roster_spots["#{key}"] = Array.new(value)
     end
   end
 

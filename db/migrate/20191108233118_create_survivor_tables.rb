@@ -5,7 +5,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "max_players", null: false, default: 12
       t.string "group_password"
       t.integer "commissioner_id", null: false
-      t.json "positions"
+      t.json "roster_spots"
     end
 
     create_table :teams, force: :cascade do |t|
@@ -18,15 +18,16 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
 
     create_table :players, force: :cascade do |t|
       t.string    "name",       null: false
-      t.string    "team",       null: false
       t.integer   "position",   null: false
+      t.string    "team",       null: false
+      t.integer   "number",     null: false
     end
 
     create_table :rosters, force: :cascade do |t|
       t.integer "week_id",         null: false, index: true
       t.integer "team_id",         null: false, index: true
       t.integer "score",           null: false, default: 0
-      t.json "positions", null: false
+      t.json "roster_spots", null: false
       t.index ["team_id", "week_id"], unique: true
     end
 

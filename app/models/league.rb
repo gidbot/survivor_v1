@@ -8,7 +8,7 @@ class League < ApplicationRecord
   has_many :users, through: :teams
 
   before_create do
-    self.positions ||= DEFAULT_FORMAT
+    self.roster_spots ||= DEFAULT_FORMAT
   end
 
 end

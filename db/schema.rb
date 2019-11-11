@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.integer "max_players", default: 12, null: false
     t.string "group_password"
     t.integer "commissioner_id", null: false
-    t.json "positions"
+    t.json "roster_spots"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -86,8 +86,9 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
 
   create_table "players", force: :cascade do |t|
     t.string "name", null: false
-    t.string "team", null: false
     t.integer "position", null: false
+    t.string "team", null: false
+    t.integer "number", null: false
   end
 
   create_table "position_players_stats", force: :cascade do |t|
@@ -111,7 +112,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.integer "week_id", null: false
     t.integer "team_id", null: false
     t.integer "score", default: 0, null: false
-    t.json "positions", null: false
+    t.json "roster_spots", null: false
     t.index ["team_id", "week_id"], name: "index_rosters_on_team_id_and_week_id", unique: true
     t.index ["team_id"], name: "index_rosters_on_team_id"
     t.index ["week_id"], name: "index_rosters_on_week_id"

@@ -4,6 +4,7 @@ class Player < ApplicationRecord
   has_many :kickers_stats
   has_many :defenses_stats
 
+  enum position: { qb: 0, wr: 1, rb: 2, te: 3, def: 5, k: 6 }
   scope :with_stats, -> { includes(:position_player_stats, :kickers_stats, :defenses_stats)}
 
   def stats(week = nil)

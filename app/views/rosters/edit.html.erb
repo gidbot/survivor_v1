@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-lg-4 col-md-6 ml-auto mr-auto">
+    <h1 class="text-center"> Set Roster </h1>
+    <%= form_for(@roster) do |f| %>
+      <%= fields_for :roster_spots do |position| %>
+        <% @roster.roster_spots.each do |key, value| %>
+          <% value.each_with_index do |val, index| %>
+            <div class="form-group">
+              <%= position.label :roster_spots, "#{key}:" %>
+              <%= fields_for key do |spot| %>
+                <%= spot.collection_select("#{index}", Player.where(position: key).order(:name),:id,:name, {:include_blank => true}, {:class => 'form-control'})%>
+            <% end %>
+            </div>
+          <% end %>
+      <% end  %>
+      <% end %>
+
+  <% end %>
+
+  </div>
+</div>

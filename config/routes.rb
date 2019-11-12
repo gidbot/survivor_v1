@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :notifications
     resources :services
 
+    get '/data/upload', 'data#upload'
     root to: "users#index"
   end
   get '/privacy', to: 'home#privacy'

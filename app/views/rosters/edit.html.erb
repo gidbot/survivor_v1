@@ -1,21 +1,28 @@
 <div class="row">
+  <div class="col-sm-10 ml-auto mr-auto">
+    <h1 class="text-center"> Set Week <%= @roster.week.number %> Roster </h1>
+  </div>
+
   <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-    <h1 class="text-center"> Set Roster </h1>
     <%= form_for(@roster) do |f| %>
-      <%= fields_for :roster_spots do |position| %>
-        <% @roster.roster_spots.each do |key, value| %>
-          <% value.each_with_index do |val, index| %>
-            <div class="form-group">
-              <%= position.label :roster_spots, "#{key}:" %>
-              <%= fields_for key do |spot| %>
-                <%= spot.collection_select("#{index}", Player.where(position: key).order(:name),:id,:name, {:include_blank => true}, {:class => 'form-control'})%>
-            <% end %>
-            </div>
-          <% end %>
-      <% end  %>
+      <% @roster.roster_spots.each do |position, val| %>
+        <% for i in (0..val.size-1) %>
+          <div class="form-group">
+            <label> <%= position %> </label>
+            <%= collection_select "roster[roster_spots][#{position}]", "",
+                                  Player.where(position: position).order(:name), :id, :name,
+                                  {
+                                      include_blank: true,
+                                      selected: "#{@roster[:roster_spots][position][i]}",
+                                      disabled: @roster.team.used_players
+                                  },
+                                  { class: 'form-control' } %>
+          </div>
+        <% end %>
       <% end %>
 
-  <% end %>
+      <%= f.submit "Save", class: 'btn btn-primary btn-block btn-lg'%>
 
+    <% end %>
   </div>
 </div>

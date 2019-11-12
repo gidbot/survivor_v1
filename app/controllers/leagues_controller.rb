@@ -13,7 +13,7 @@ class LeaguesController < ApplicationController
     if @league.save
       redirect_to league_path(@league)
     else
-      flash[:alert] = @leage.errors.messages.join("\n")
+      flash[:alert] = @league.errors.messages.join("\n")
       render '_form'
     end
   end

@@ -10,6 +10,9 @@ Rails.application.routes.draw do
     get '/edit_players', to: 'data#edit_players'
     post '/update_players', to: 'data#update_players'
 
+    get '/edit_stats', to: 'data#edit_stats'
+    post '/update_stats', to: 'data#update_stats'
+
     root to: "users#index"
   end
   get '/privacy', to: 'home#privacy'

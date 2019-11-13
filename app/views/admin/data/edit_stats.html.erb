@@ -1,7 +1,7 @@
 <div class="row">
   <div class="col-lg-4 col-md-6 ml-auto mr-auto">
-    <h1 class="text-center"> Upload Players </h1>
-    <%= form_tag(admin_update_players_url, method: "post", multipart: true) do %>
+    <h1 class="text-center"> Upload Stats </h1>
+    <%= form_tag(admin_update_stats_url, method: "post", multipart: true) do %>
       <%= file_field_tag :file %>
       <%= submit_tag( "Import" ) %>
     <% end %>

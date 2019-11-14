@@ -32,7 +32,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
     end
 
     create_table :weeks, force: :cascade do |t|
-      t.integer "number", null: false
+      t.integer "number", null: false, index: true
       t.boolean "current", null: false, default: false
       t.index ["number"], where: "current = TRUE"
     end
@@ -63,6 +63,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "40_to_49", default: 0
       t.integer "50_plus", default: 0
       t.integer "pat", default: 0
+      t.integer "missed", default: 0
       t.index ["player_id", "week_id"], unique: true
     end
 

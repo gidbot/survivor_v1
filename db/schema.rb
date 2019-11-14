@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   end
 
   create_table "defenses_stats", force: :cascade do |t|
-    t.integer "player_id", null: false
     t.integer "week_id", null: false
     t.integer "sacks", default: 0
     t.integer "ints", default: 0
@@ -135,7 +134,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   create_table "teams", force: :cascade do |t|
     t.integer "league_id", null: false
     t.integer "user_id", null: false
-    t.string "name", null: false
+    t.string "name", null: falses
     t.integer "season_score", default: 0, null: false
     t.index ["league_id"], name: "index_teams_on_league_id"
     t.index ["user_id", "league_id"], name: "index_teams_on_user_id_and_league_id", unique: true

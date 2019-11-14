@@ -18,6 +18,7 @@ class Player < ApplicationRecord
         _stats = position_players_stats
       end
       _stats.where(week: week) if week.present?
+      _stats
     end
   end
 

@@ -10,7 +10,7 @@ class Roster < ApplicationRecord
     @players ||= begin
       roster_spots.keys.map do |roster_position|
         player = Player.find_by_id(roster_spots[roster_position])
-        { roster_position: roster_position, player: player, score: calculate_score(player) }
+        { roster_position: roster_position, player: player, score: player.week_stats(week).score}
       end
     end
   end
@@ -22,10 +22,6 @@ class Roster < ApplicationRecord
     self.team.league.roster_spots.each do |key, value|
       self.roster_spots["#{key}"] = Array.new(value)
     end
-  end
-
-  def calculate_score(player)
-    0
   end
 
 end

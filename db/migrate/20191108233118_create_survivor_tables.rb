@@ -49,7 +49,8 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "rec_yards", default: 0
       t.integer "rec_tds", default: 0
       t.integer "return_tds", default: 0
-      t.integer "two_point", default: 0
+      t.integer "other_tds", default: 0
+      t.integer "two_points", default: 0
       t.integer "fumbles_lost", default: 0
       t.index ["player_id", "week_id"], unique: true
     end
@@ -57,11 +58,11 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
     create_table :kickers_stats, force: :cascade do |t|
       t.integer "player_id", null: false, index: true
       t.integer "week_id", null: false, index: true
-      t.integer "0_to_19", default: 0
-      t.integer "20_to_29", default: 0
-      t.integer "30_to_39", default: 0
-      t.integer "40_to_49", default: 0
-      t.integer "50_plus", default: 0
+      t.integer "inside_20", default: 0
+      t.integer "twenties", default: 0
+      t.integer "thirties", default: 0
+      t.integer "fourties", default: 0
+      t.integer "over_50", default: 0
       t.integer "pat", default: 0
       t.integer "missed", default: 0
       t.index ["player_id", "week_id"], unique: true
@@ -71,7 +72,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "player_id", null: false, index: true
       t.integer "week_id", null: false, index: true
       t.integer "sacks", default: 0
-      t.integer "ints", default: 0
+      t.integer "interceptions", default: 0
       t.integer "fumble_recoveries", default: 0
       t.integer "touchdowns", default: 0
       t.integer "safeties", default: 0

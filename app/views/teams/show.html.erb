@@ -19,7 +19,7 @@
       <% @team.rosters.each do |roster| %>
         <tr>
           <td> <%= link_to "Week #{roster.week.number}", roster_path(roster) %> </td>
-          <td> <%= roster.score %> </td>
+          <td> <%= roster.total_score %> </td>
         </tr>
       <% end %>
       </tbody>

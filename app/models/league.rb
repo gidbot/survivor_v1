@@ -6,6 +6,7 @@ class League < ApplicationRecord
   belongs_to :commissioner, class_name: :User
   has_many :teams
   has_many :users, through: :teams
+  default_scope { includes(:teams) }
 
   before_create do
     self.roster_spots ||= DEFAULT_FORMAT

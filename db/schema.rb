@@ -24,19 +24,20 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "defenses_stats", force: :cascade do |t|
+  create_table "defense_stats", force: :cascade do |t|
+    t.integer "player_id", null: false
     t.integer "week_id", null: false
     t.integer "sacks", default: 0
-    t.integer "ints", default: 0
+    t.integer "interceptions", default: 0
     t.integer "fumble_recoveries", default: 0
     t.integer "touchdowns", default: 0
     t.integer "safeties", default: 0
     t.integer "blocked_kicks", default: 0
     t.integer "return_tds", default: 0
     t.integer "points_allowed", default: 0
-    t.index ["player_id", "week_id"], name: "index_defenses_stats_on_player_id_and_week_id", unique: true
-    t.index ["player_id"], name: "index_defenses_stats_on_player_id"
-    t.index ["week_id"], name: "index_defenses_stats_on_week_id"
+    t.index ["player_id", "week_id"], name: "index_defense_stats_on_player_id_and_week_id", unique: true
+    t.index ["player_id"], name: "index_defense_stats_on_player_id"
+    t.index ["week_id"], name: "index_defense_stats_on_week_id"
   end
 
   create_table "friendly_id_slugs", force: :cascade do |t|
@@ -50,18 +51,19 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.index ["sluggable_type", "sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_type_and_sluggable_id"
   end
 
-  create_table "kickers_stats", force: :cascade do |t|
+  create_table "kicker_stats", force: :cascade do |t|
     t.integer "player_id", null: false
     t.integer "week_id", null: false
-    t.integer "0_to_19", default: 0
-    t.integer "20_to_29", default: 0
-    t.integer "30_to_39", default: 0
-    t.integer "40_to_49", default: 0
-    t.integer "50_plus", default: 0
+    t.integer "inside_20", default: 0
+    t.integer "twenties", default: 0
+    t.integer "thirties", default: 0
+    t.integer "fourties", default: 0
+    t.integer "over_50", default: 0
     t.integer "pat", default: 0
-    t.index ["player_id", "week_id"], name: "index_kickers_stats_on_player_id_and_week_id", unique: true
-    t.index ["player_id"], name: "index_kickers_stats_on_player_id"
-    t.index ["week_id"], name: "index_kickers_stats_on_week_id"
+    t.integer "missed", default: 0
+    t.index ["player_id", "week_id"], name: "index_kicker_stats_on_player_id_and_week_id", unique: true
+    t.index ["player_id"], name: "index_kicker_stats_on_player_id"
+    t.index ["week_id"], name: "index_kicker_stats_on_week_id"
   end
 
   create_table "leagues", force: :cascade do |t|
@@ -90,7 +92,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.integer "number", null: false
   end
 
-  create_table "position_players_stats", force: :cascade do |t|
+  create_table "position_player_stats", force: :cascade do |t|
     t.integer "player_id", null: false
     t.integer "week_id", null: false
     t.integer "pass_yards", default: 0
@@ -102,9 +104,10 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.integer "rec_yards", default: 0
     t.integer "rec_tds", default: 0
     t.integer "return_tds", default: 0
-    t.integer "two_point", default: 0
+    t.integer "other_tds", default: 0
+    t.integer "two_points", default: 0
     t.integer "fumbles_lost", default: 0
-    t.index ["player_id", "week_id"], name: "index_position_players_stats_on_player_id_and_week_id", unique: true
+    t.index ["player_id", "week_id"], name: "index_position_player_stats_on_player_id_and_week_id", unique: true
   end
 
   create_table "rosters", force: :cascade do |t|
@@ -134,7 +137,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   create_table "teams", force: :cascade do |t|
     t.integer "league_id", null: false
     t.integer "user_id", null: false
-    t.string "name", null: falses
+    t.string "name", null: false
     t.integer "season_score", default: 0, null: false
     t.index ["league_id"], name: "index_teams_on_league_id"
     t.index ["user_id", "league_id"], name: "index_teams_on_user_id_and_league_id", unique: true
@@ -160,7 +163,8 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   create_table "weeks", force: :cascade do |t|
     t.integer "number", null: false
     t.boolean "current", default: false, null: false
-    t.index ["number"], name: "index_weeks_on_number", where: "(current = true)"
+    t.index ["current"], name: "index_weeks_on_current", where: "(current = true)"
+    t.index ["number"], name: "index_weeks_on_number"
   end
 
   add_foreign_key "services", "users"

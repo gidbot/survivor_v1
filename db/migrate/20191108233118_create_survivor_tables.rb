@@ -34,10 +34,10 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
     create_table :weeks, force: :cascade do |t|
       t.integer "number", null: false, index: true
       t.boolean "current", null: false, default: false
-      t.index ["number"], where: "current = TRUE"
+      t.index ["current"], where: "current = TRUE"
     end
 
-    create_table :position_players_stats, force: :cascade do |t|
+    create_table :position_player_stats, force: :cascade do |t|
       t.integer "player_id", null: false
       t.integer "week_id", null: false
       t.integer "pass_yards", default: 0
@@ -55,7 +55,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.index ["player_id", "week_id"], unique: true
     end
 
-    create_table :kickers_stats, force: :cascade do |t|
+    create_table :kicker_stats, force: :cascade do |t|
       t.integer "player_id", null: false, index: true
       t.integer "week_id", null: false, index: true
       t.integer "inside_20", default: 0
@@ -68,7 +68,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.index ["player_id", "week_id"], unique: true
     end
 
-    create_table :defenses_stats, force: :cascade do |t|
+    create_table :defense_stats, force: :cascade do |t|
       t.integer "player_id", null: false, index: true
       t.integer "week_id", null: false, index: true
       t.integer "sacks", default: 0

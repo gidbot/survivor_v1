@@ -12,5 +12,5 @@
 
 # These inflection rules are supported but not enabled by default:
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.uncountable %w(position_players_stats)
+  inflect.uncountable %w(position_player_stats kicker_stats defense_stats)
 end

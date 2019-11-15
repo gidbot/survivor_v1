@@ -13,7 +13,7 @@ module Admin
     def update_stats
       week_id = Week.find(params[:week][:id]).id
       enumerator = CSV.foreach(params[:file].path, headers: true)
-      if CsvProcessJob.perform_now(enumerator, week_id, params[:player][:type])
+      if CsvProcessJob.perform_now(enumerator, week_id)
         flash[:success] = "stats uploaded"
       else
         flash[:alert] = "Something went wrong. Check your shit."

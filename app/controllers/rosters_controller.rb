@@ -6,6 +6,7 @@ class RostersController < ApplicationController
   end
 
   def update
+    binding.pry
     if roster.update(roster_params)
       flash[:success] = "Roster Saved"
       redirect_to roster_path(roster)

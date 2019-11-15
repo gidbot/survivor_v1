@@ -2,7 +2,7 @@ class CsvProcessJob < ApplicationJob
   queue_as :default
 
   def perform(enumerator, week_id)
-    begin
+    # begin
       enumerator.each do |row|
         player_hash = row.to_hash
         player = Player.find_or_create_by(name: player_hash["name"],
@@ -26,8 +26,8 @@ class CsvProcessJob < ApplicationJob
         stats.update_attributes(player_hash)
       end
       true
-    rescue Exception => error
-      false
-    end
+    # rescue Exception => error
+    #   false
+    # end
   end
 end

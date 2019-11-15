@@ -8,8 +8,8 @@ class PositionPlayerStats < PlayerStats
        receptions: 0.5,
        rec_yards: 0.10,
        return_tds: 6,
-       # other_tds: 6,
-       # two_points: 2,
+       other_tds: 6,
+       two_points: 2,
        fumbles_lost: -2
   }
 

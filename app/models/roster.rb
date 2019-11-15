@@ -8,10 +8,20 @@ class Roster < ApplicationRecord
 
   def players
     @players ||= begin
+      player_ids = roster_spots.values.flatten.select(&:present?)
+      _players = Player.find(player_ids)
       roster_spots.keys.map do |roster_position|
-        player = Player.find_by_id(roster_spots[roster_position])
-        { roster_position: roster_position, player: player, score: player.week_stats(week).score}
-      end
+        roster_spots[roster_position].map do |roster_spot|
+          player = _players.detect{|p| p.id.to_s == roster_spot.to_s}
+          { roster_position: roster_position, player: player, score: player&.week_stats(week)&.score}
+        end
+      end.flatten
+    end
+  end
+
+  def total_score
+    @total_score ||= begin
+       players.reduce(0){|total, p| total + (p[:score] || 0)}.round(2)
     end
   end
 

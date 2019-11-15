@@ -4,7 +4,7 @@ class PlayerStats < ApplicationRecord
   attr_accessor :score_map
   def score(_score = 0)
     score_map.each do |statistic, multiplier|
-      _score += self[statistic] * multiplier
+      _score += self[statistic].to_i * multiplier
     end
     _score
   end

@@ -4,7 +4,7 @@ class KickerStats < PlayerStats
       twenties: 3,
       thirties: 3,
       fourties: 4,
-      fifties: 5,
+      over_50: 5,
       pat: 1,
       missed: -1
   }

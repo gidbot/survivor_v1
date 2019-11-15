@@ -14,7 +14,7 @@
                                   {
                                       include_blank: true,
                                       selected: "#{@roster[:roster_spots][position][i]}",
-                                      disabled: @roster.team.used_players
+                                      disabled: @roster.team.used_players(@roster.id)
                                   },
                                   { class: 'form-control select2' } %>
           </div>

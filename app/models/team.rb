@@ -3,10 +3,11 @@ class Team < ApplicationRecord
   belongs_to :league
   belongs_to :user
   has_many :rosters
-
   before_create :create_rosters
-  after_find :set_used_players
-  attr_accessor :used_players
+
+  def used_players(exclude = nil)
+    @used_players ||= rosters.reject{|r| r.id == exclude}.map { |roster| roster.roster_spots.values.flatten.select(&:present?)}.flatten
+  end
 
   private
 
@@ -15,10 +16,6 @@ class Team < ApplicationRecord
     Week.where("number >= ?", number).each do |w|
       self.rosters.build(week: w)
     end
-  end
-
-  def set_used_players
-    self.used_players = rosters.map { |roster| roster.roster_spots.values }.flatten.compact
   end
 
 end

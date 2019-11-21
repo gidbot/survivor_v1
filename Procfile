@@ -1,2 +1,2 @@
 web: rails server
-worker: sidekiq
+worker: bundle exec sidekiq -c 2

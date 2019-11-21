@@ -19,10 +19,8 @@ class Roster < ApplicationRecord
     end
   end
 
-  def total_score
-    @total_score ||= begin
-       players.reduce(0){|total, p| total + (p[:score] || 0)}.round(2)
-    end
+  def calculate_score
+     players.reduce(0){|total, p| total + (p[:score] || 0)}.round(2)
   end
 
   private

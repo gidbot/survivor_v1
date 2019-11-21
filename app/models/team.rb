@@ -9,6 +9,10 @@ class Team < ApplicationRecord
     @used_players ||= rosters.reject{|r| r.id == exclude}.map { |roster| roster.roster_spots.values.flatten.select(&:present?)}.flatten
   end
 
+  def calculate_score
+    rosters.reduce(0){|total, p| total + (p[:score] || 0)}.round(2)
+  end
+
   private
 
   def create_rosters

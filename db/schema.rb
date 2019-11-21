@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
   create_table "rosters", force: :cascade do |t|
     t.integer "week_id", null: false
     t.integer "team_id", null: false
-    t.integer "score", default: 0, null: false
+    t.decimal "score", default: "0.0", null: false
     t.json "roster_spots", null: false
     t.index ["team_id", "week_id"], name: "index_rosters_on_team_id_and_week_id", unique: true
     t.index ["team_id"], name: "index_rosters_on_team_id"
@@ -138,7 +138,7 @@ ActiveRecord::Schema.define(version: 2019_11_08_233118) do
     t.integer "league_id", null: false
     t.integer "user_id", null: false
     t.string "name", null: false
-    t.integer "season_score", default: 0, null: false
+    t.decimal "score", default: "0.0", null: false
     t.index ["league_id"], name: "index_teams_on_league_id"
     t.index ["user_id", "league_id"], name: "index_teams_on_user_id_and_league_id", unique: true
     t.index ["user_id"], name: "index_teams_on_user_id"

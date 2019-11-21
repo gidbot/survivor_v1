@@ -12,7 +12,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
       t.integer "league_id",  null: false, index: true
       t.integer "user_id",    null: false, index: true
       t.string "name", null: false
-      t.integer "season_score", default: 0, null: false
+      t.decimal "score", default: 0, null: false
       t.index ["user_id", "league_id"], unique: true
     end
 
@@ -26,7 +26,7 @@ class CreateSurvivorTables < ActiveRecord::Migration[5.2]
     create_table :rosters, force: :cascade do |t|
       t.integer "week_id",         null: false, index: true
       t.integer "team_id",         null: false, index: true
-      t.integer "score",           null: false, default: 0
+      t.decimal "score",           null: false, default: 0
       t.json "roster_spots", null: false
       t.index ["team_id", "week_id"], unique: true
     end

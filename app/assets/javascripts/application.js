@@ -14,12 +14,13 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require bootstrap
 //= require select2
 //= require_tree .
 
 $(document).ready(function () {
-    console.log("hola2");
     $(".select2" ).select2({
         theme: "bootstrap"
     });
+    $('.dropdown-toggle').dropdown()
 });

@@ -7,9 +7,19 @@ class League < ApplicationRecord
   has_many :teams
   has_many :users, through: :teams
   default_scope { includes(:teams) }
+  validate :teams_unique
 
   before_create do
     self.roster_spots ||= DEFAULT_FORMAT
+  end
+
+  def teams_unique
+    teams.each do |team|
+      next if team.valid?
+      team.errors.full_messages.each do |msg|
+        errors.add(:base, msg)
+      end
+    end
   end
 
 end

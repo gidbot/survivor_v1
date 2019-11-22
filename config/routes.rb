@@ -27,6 +27,8 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   root to: 'home#index'
 
+  get :join_league, to: "leagues#join"
+  patch :join_league, to: "leagues#add_user", as: :add_user_to_league
   resources :leagues, except: [:destroy]
   resources :teams, execept: [:destroy, :index]
   resources :rosters, execept: [:destroy]

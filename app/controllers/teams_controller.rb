@@ -3,7 +3,7 @@ class TeamsController < ApplicationController
   before_action :team
 
   def show
-    @roster = team.rosters.where(week: current_week).first
+    @rosters = team.rosters.includes(:week).order("weeks.number")
   end
 
   private

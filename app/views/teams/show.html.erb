@@ -16,7 +16,7 @@
       </tr>
       </thead>
       <tbody>
-      <% @team.rosters.each do |roster| %>
+      <% @rosters.each do |roster| %>
         <tr>
           <td> <%= link_to "Week #{roster.week.number}", roster_path(roster) %> </td>
           <td> <%= roster.score %> </td>

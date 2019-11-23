@@ -1,6 +1,10 @@
 <div class="row">
-  <div class="col-sm-8 ml-auto mr-auto">
-    <h1 class="text-center"> <%= @team.user.name %> </h1>
+  <div class="col-sm-8 ml-auto mr-auto text-center">
+    <h1> <%= @team.name %> </h1>
+    <h5> User: <%= @team.user.name %> </h5>
+    <% if @team.user == current_user %>
+      <%= link_to "Edit Team", edit_team_path(@team), class: "btn btn-primary text-center" %>
+    <% end %>
   </div>
 </div>
 
